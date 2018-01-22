@@ -17,7 +17,7 @@ module.exports = {
 				test: /\.jsx?$/,
 				loader: 'babel-loader', 
 				exclude: /node-modules/, 
-				options: { presets: ['es2015', 'react'] } 
+				options: { presets: ['es2015', 'react', 'stage-0'] } 
 			},
 			{
 				test: /\.css$/,
@@ -36,4 +36,5 @@ module.exports = {
 			}
 		],
 	},
+  // plugins: ["transform-class-properties"]
 };

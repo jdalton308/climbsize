@@ -3,7 +3,11 @@
   "version": "1.0.0",
   "description": "web app for predicting the perfect shoe size",
   "main": "bundle.js",
-  "dependencies": {},
+  "dependencies": {
+    "prop-types": "^15.6.0",
+    "react-redux": "^5.0.6",
+    "redux": "^3.7.2"
+  },
   "devDependencies": {
     "babel-core": "^6.14.0",
     "babel-loader": "^6.2.5",

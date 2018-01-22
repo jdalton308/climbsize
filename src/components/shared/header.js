@@ -1,11 +1,23 @@
+'use strict';
 
 import React, {Component} from 'react';
+import PropTypes from 'prop-types';
 import {
   Link
 } from 'react-router-dom';
+import * as firebase from 'firebase';
+
+
+// TODO: 
+// - Move sign-in form to own component, and make this state-less
 
 
 export default class Header extends Component {
+
+  static propTypes = {
+    user: PropTypes.object,
+  }
+
   constructor(props) {
     super(props);
 
@@ -16,12 +28,12 @@ export default class Header extends Component {
     };
 
     this.updateInput = this.updateInput.bind(this);
-    this.logIn = this.logIn.bind(this);
-    this.logOut = this.logOut.bind(this);
+    this.signIn = this.signIn.bind(this);
+    this.signOut = this.signOut.bind(this);
     this.toggleSignIn = this.toggleSignIn.bind(this);
   }
 
-  logIn() {
+  signIn() {
     const {
       username,
       password
@@ -33,10 +45,12 @@ export default class Header extends Component {
       .catch((error) => {
         console.log('error signing in: ', error);
       });
+    // picked up in store by watcher in app.js
   }
 
-  logOut() {
+  signOut() {
     firebase.auth().signOut();
+    // picked up in store by watcher in app.js
   }
 
   updateInput(e) {
