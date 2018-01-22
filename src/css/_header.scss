@@ -1,0 +1,17 @@
+
+header {
+  display: flex;
+  padding: 16px 40px;
+
+  .logo {
+    flex: 0 0 auto;
+  }
+  .links {
+    display: inline-block;
+    flex: 1 1 0;
+    text-align: right;
+  }
+  .log-in-dropdown {
+    display: none;
+  }
+}

@@ -20,9 +20,9 @@ html {
 main {
 	position: relative;
 	min-height: 100vh;
-	padding: 33vh 20px 50px;
+	// padding: 50px 20px;
 	text-align: center;
-	background-color: $light-grey;
+	// background-color: $light-grey;
 }
 
 h1,
@@ -41,6 +41,7 @@ h2 {
 }
 h3 {
 	font-size: 1.8rem;
+	margin-bottom: 12px;
 }
 h4 {
 	font-size: 1.3rem;
@@ -83,7 +84,7 @@ button,
 .button {
 	display: inline-block;
 	padding: 10px;
-	border: none;
+	border: 1px solid $text-color;
 	border-radius: none;
 	font-family: $sansFamily;
 	font-size: 0.9rem;
