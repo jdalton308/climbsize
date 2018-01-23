@@ -36,5 +36,8 @@ module.exports = {
 			}
 		],
 	},
-  // plugins: ["transform-class-properties"]
+	devServer: {
+    historyApiFallback: true,
+    // hot: true
+	}
 };

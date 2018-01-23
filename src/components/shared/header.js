@@ -5,7 +5,8 @@ import PropTypes from 'prop-types';
 import {
   Link
 } from 'react-router-dom';
-import * as firebase from 'firebase';
+
+import { auth } from '../../utils/firebase';
 
 
 // TODO: 
@@ -40,8 +41,7 @@ export default class Header extends Component {
     } = this.state;
 
     console.log('signing in');
-    firebase.auth()
-      .signInWithEmailAndPassword(username, password)
+    auth.signInWithEmailAndPassword(username, password)
       .catch((error) => {
         console.log('error signing in: ', error);
       });
@@ -49,7 +49,7 @@ export default class Header extends Component {
   }
 
   signOut() {
-    firebase.auth().signOut();
+    auth.signOut();
     // picked up in store by watcher in app.js
   }
 

@@ -5,7 +5,11 @@ import {
   BrowserRouter,
   Route
 } from 'react-router-dom';
-import * as firebase from 'firebase';
+import {
+  auth,
+  db,
+  userDb
+} from '../utils/firebase';
 
 import { connect } from 'react-redux';
 import {
@@ -13,9 +17,8 @@ import {
   setAuth
 } from '../redux/actions';
 
-import Header from './shared/header';
-import VisibleHeader from './containers/VisibleHeader';
-import ProfileCreate from './views/profile-create';
+import VisibleHeader from './containers/visible-header';
+import VisibleProfileCreate from './containers/visible-profile-create';
 import Home from './views/home';
 
 
@@ -25,9 +28,18 @@ const App = ({dispatch}) => {
 
   // Watch for auth state change
   //--------
-  firebase.auth().onAuthStateChanged((user) => {
-    console.log('auth state changed. User: ', user);
-    dispatch(setUser(user));
+  auth.onAuthStateChanged((userAuth) => {
+    // Set Auth state in store
+    dispatch(setAuth(userAuth));
+
+    // Set profile state in store
+    if (userAuth.uid) {
+      userDb.doc(userAuth.uid).get().then((doc) => {
+        dispatch(setUser( doc.data() ));
+      });
+    } else {
+      dispatch(setUser(null));
+    }
   });
 
 
@@ -37,7 +49,7 @@ const App = ({dispatch}) => {
         <VisibleHeader />
 
         <Route exact path='/' component={Home} />
-        <Route path='/profile-create' component={ProfileCreate} />
+        <Route path='/profile-create' component={VisibleProfileCreate} />
       </div>
     </BrowserRouter>
 	);
