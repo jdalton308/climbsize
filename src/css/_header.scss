@@ -1,5 +1,6 @@
 
 header {
+  position: relative;
   display: flex;
   padding: 16px 40px;
 
@@ -13,5 +14,12 @@ header {
   }
   .log-in-dropdown {
     display: none;
+
+    &.show {
+      display: block;
+      position: absolute;
+      top: 100%;
+      right: 0;
+    }
   }
 }

@@ -16,7 +16,9 @@ import { auth } from '../../utils/firebase';
 export default class Header extends Component {
 
   static propTypes = {
-    user: PropTypes.object,
+    userAuth: PropTypes.object,
+    userData: PropTypes.object, // TODO: either object or null
+    history: PropTypes.object,
   }
 
   constructor(props) {
@@ -24,7 +26,7 @@ export default class Header extends Component {
 
     this.state = {
       canShowSignIn: false,
-      username: '',
+      email: '',
       password: '',
     };
 
@@ -36,12 +38,17 @@ export default class Header extends Component {
 
   signIn() {
     const {
-      username,
+      email,
       password
     } = this.state;
 
     console.log('signing in');
-    auth.signInWithEmailAndPassword(username, password)
+    auth.signInWithEmailAndPassword(email, password)
+      .then((userAuth) => {
+        // go to profile
+        this.props.history.push('/profile');
+        this.setState({canShowSignIn: false});
+      })
       .catch((error) => {
         console.log('error signing in: ', error);
       });
@@ -50,6 +57,7 @@ export default class Header extends Component {
 
   signOut() {
     auth.signOut();
+    this.props.history.push('/');
     // picked up in store by watcher in app.js
   }
 
@@ -72,9 +80,15 @@ export default class Header extends Component {
 
   render() {
     const {
-      username,
+      email,
       password,
+      canShowSignIn,
     } = this.state;
+
+    const {
+      userAuth,
+      userData
+    } = this.props;
 
     return (
       <header>
@@ -91,17 +105,9 @@ export default class Header extends Component {
           // view profile
           // sign-out
         }
-        <div className="links">
-            <Link to='/profile-create'>
-              Create Profile
-            </Link>
-            <button
-              type='button'
-              onClick={this.toggleSignIn}
-            >
-              Sign In
-            </button>
-
+        
+        { (userAuth) ?
+          <div className="links">
             <button
               type='button'
               onClick={this.signOut}
@@ -111,19 +117,33 @@ export default class Header extends Component {
             <Link to='/profile'>
               View Profile
             </Link>
-        </div>
+          </div>
+          :
+          <div className="links">
+            <Link to='/profile-create'>
+              Create Profile
+            </Link>
+            <button
+              type='button'
+              onClick={this.toggleSignIn}
+            >
+              Sign In
+            </button>
+          </div>
+        }
 
 
-        <div className="log-in-dropdown">
-          <h3>Log In</h3>
+
+        <div className={['log-in-dropdown', (canShowSignIn) ? 'show' : ''].join(' ')}>
+          <h3>Sign In</h3>
           <form id="log-in">
-            <label htmlFor="username">
-              <div className="label-copy">Username</div>
+            <label htmlFor="email">
+              <div className="label-copy">Email</div>
               <input
                 type="email"
-                id="username"
-                name="username"
-                value={username}
+                id="email"
+                name="email"
+                value={email}
                 onChange={this.updateInput}
               />
             </label>
@@ -139,7 +159,7 @@ export default class Header extends Component {
             </label>
             <button
               type="button"
-              onClick={this.logIn}
+              onClick={this.signIn}
             >
               Submit
             </button>

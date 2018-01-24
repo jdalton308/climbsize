@@ -19,6 +19,7 @@ import {
 
 import VisibleHeader from './containers/visible-header';
 import VisibleProfileCreate from './containers/visible-profile-create';
+import VisibleProfile from './containers/visible-profile';
 import Home from './views/home';
 
 
@@ -33,7 +34,7 @@ const App = ({dispatch}) => {
     dispatch(setAuth(userAuth));
 
     // Set profile state in store
-    if (userAuth.uid) {
+    if (userAuth) {
       userDb.doc(userAuth.uid).get().then((doc) => {
         dispatch(setUser( doc.data() ));
       });
@@ -46,10 +47,11 @@ const App = ({dispatch}) => {
 	return (
 		<BrowserRouter>
       <div>
-        <VisibleHeader />
+        <Route path='/' component={VisibleHeader} />
 
         <Route exact path='/' component={Home} />
         <Route path='/profile-create' component={VisibleProfileCreate} />
+        <Route path='/profile' component={VisibleProfile} />
       </div>
     </BrowserRouter>
 	);

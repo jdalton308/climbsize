@@ -6,7 +6,8 @@ import Header from '../shared/header';
 
 const mapStateToProps = (state, ownProps) => {
   return {
-    user: state.user,
+    userData: state.userData,
+    userAuth: state.userAuth
   }
 };
 
