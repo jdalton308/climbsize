@@ -11,6 +11,10 @@ header {
     display: inline-block;
     flex: 1 1 0;
     text-align: right;
+
+    > * {
+      margin: 0 12px;
+    }
   }
   .log-in-dropdown {
     display: none;

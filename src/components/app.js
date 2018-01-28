@@ -30,10 +30,12 @@ const App = ({dispatch}) => {
   // Watch for auth state change
   //--------
   auth.onAuthStateChanged((userAuth) => {
+    console.log('Auth state changed: ', userAuth);
+
     // Set Auth state in store
     dispatch(setAuth(userAuth));
 
-    // Set profile state in store
+    // Set profile state in store, or delete
     if (userAuth) {
       userDb.doc(userAuth.uid).get().then((doc) => {
         dispatch(setUser( doc.data() ));

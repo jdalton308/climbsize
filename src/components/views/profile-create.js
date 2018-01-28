@@ -173,7 +173,9 @@ export default class ProfileCreate extends Component {
             >
               {
                 ShoeSizes.map((size) => (
-                  <option key={size.eu} value={size.eu}>{`${size.eu} (${size.us}US)`}</option>
+                  <option key={size.eu} value={size.eu}>
+                    {`${size.eu} (${size.us}US)`}
+                  </option>
                 ))
               }
             </select>
